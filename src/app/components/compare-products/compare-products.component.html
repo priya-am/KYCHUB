@@ -1,0 +1,124 @@
+<div class="compare-container">
+    <div class="header-container">
+      <h2>Compare Products</h2>
+      <button nz-button nzType="primary" (click)="showModal()" [disabled]="comparedProducts.length >= 4">
+        Add More Products
+      </button>
+    </div>
+    
+    <ng-container *ngIf="comparedProducts.length > 0; else emptyState">
+      <div class="compare-grid">
+        
+        <div class="features-column">
+          <div class="feature-header">Features</div>
+          <div class="feature-image">Image</div>
+          <div class="feature-item" style="height: 70px;">Title</div>
+          <div class="feature-item" style="height:178px;">Description</div>
+          <ng-container *ngFor="let feature of getCompareFeatures()">
+            <div class="feature-item">{{ getFeatureLabel(feature) }}</div>
+          </ng-container>
+        </div>
+        
+        
+        <div *ngFor="let product of comparedProducts" class="product-column">
+          <div class="product-header">
+            <button nz-button nzType="text" nzDanger (click)="removeProduct(product.id)">
+              <span nz-icon nzType="close" nzTheme="outline"></span>
+            </button>
+          </div>
+          <div class="product-image">
+            <img [src]="product.thumbnail" [alt]="product.title">
+          </div>
+          <div class="product-item product-title" style="height: 69px;">{{ product.title }}</div>
+          <div class="product-item product-description" style="height: 179px;">{{ product.description }}</div>
+          
+          <ng-container *ngFor="let feature of getCompareFeatures()">
+            <div class="product-item">
+              <ng-container [ngSwitch]="feature">
+                <ng-container *ngSwitchCase="'price'">
+                  ${{ getFeatureValue(product, feature) }}
+                </ng-container>
+                <ng-container *ngSwitchCase="'discountPercentage'">
+                  {{ getFeatureValue(product, feature) }}%
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  {{ getFeatureValue(product, feature) }}
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-template #emptyState>
+      <nz-empty 
+        nzDescription="No products selected for comparison"
+        [nzNotFoundContent]="customEmptyContent">
+      </nz-empty>
+      <ng-template #customEmptyContent>
+        <div class="empty-content">
+          <p>You haven't selected any products to compare</p>
+          <button nz-button nzType="primary" routerLink="/product-details">
+            Browse Products
+          </button>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+  
+  
+  <nz-modal
+    [(nzVisible)]="isModalVisible"
+    nzTitle="Add Products to Compare"
+    (nzOnCancel)="handleCancel()"
+    [nzFooter]="null"
+    nzWidth="80%">
+    
+    <ng-container *nzModalContent>
+      <p>Select up to {{ 4 - comparedProducts.length }} more products to compare ({{ comparedProducts.length }} already selected)</p>
+      
+      <nz-table 
+        #modalTable 
+        [nzData]="allProducts"
+        [nzLoading]="loading"
+        nzShowPagination
+        [nzPageSize]="5">
+        
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Title</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of modalTable.data">
+            <td>
+              <img [src]="product.thumbnail" [alt]="product.title" class="product-thumbnail">
+            </td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.category }}</td>
+            <td>${{ product.price }}</td>
+            <td>
+              <button 
+                nz-button 
+                nzType="primary" 
+                (click)="addToCompare(product)"
+                [disabled]="product.isCompared || comparedProducts.length >= 4">
+                Add to Compare
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+      
+      <div class="modal-footer">
+        <button nz-button nzType="default" (click)="handleCancel()">Close</button>
+      </div>
+    </ng-container>
+  </nz-modal>

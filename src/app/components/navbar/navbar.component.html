@@ -1,0 +1,18 @@
+<nz-layout>
+    <nz-header class="header">
+      <div class="logo">
+        <a routerLink="/">
+          <h1>Product Store</h1>
+        </a>
+      </div>
+      <div class="nav-right">
+        <nz-badge [nzCount]="comparedProductsCount">
+          <a routerLink="/compare-products" class="compare-link">
+            <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+            Compare
+          </a>
+        </nz-badge>
+        <nz-avatar nzIcon="user" class="user-avatar"></nz-avatar>
+      </div>
+    </nz-header>
+  </nz-layout>

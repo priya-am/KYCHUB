@@ -1,0 +1,60 @@
+  <div class="products-container">
+    <h2>Product Details</h2>
+    <p>Select up to 4 products to compare their features side by side</p>
+    
+    <nz-table
+      #productsTable
+      [nzData]="displayProducts"
+      [nzLoading]="loading"
+      [nzPageSize]="5"
+      nzShowPagination
+      nzShowSizeChanger
+      [nzPageSizeOptions]="[5, 10, 20]"
+      [nzShowQuickJumper]="true"
+      (nzQueryParams)="onQueryParamsChange($event)">
+      
+      <thead>
+        <tr>
+          <th nzColumnKey="thumbnail">Image</th>
+          <th nzColumnKey="title" [nzSortFn]="true">Title</th>
+          <th nzColumnKey="brand" [nzSortFn]="true">Brand</th>
+          <th nzColumnKey="category" [nzSortFn]="true">Category</th>
+          <th nzColumnKey="price" [nzSortFn]="true">Price</th>
+          <th nzColumnKey="discountPercentage" [nzSortFn]="true">Discount</th>
+          <th nzColumnKey="description">Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of productsTable.data">
+          <td>
+            <img [src]="product.thumbnail" [alt]="product.title" class="product-image">
+          </td>
+          <td [class.highlighted]="product.isCompared">{{ product.title }}</td>
+          <td [class.highlighted]="product.isCompared">{{ product.brand || 'N/A' }}</td>
+          <td [class.highlighted]="product.isCompared">{{ product.category }}</td>
+          <td [class.highlighted]="product.isCompared">${{ product.price }}</td>
+          <td [class.highlighted]="product.isCompared">{{ product.discountPercentage }}%</td>
+          <td>{{ product.description }}</td>
+          <td>
+            <button
+              nz-button
+              nzType="primary"
+              (click)="addToCompare(product)"
+              [disabled]="product.isCompared || compareList.length >= 4">
+              Compare
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    
+    <div *ngIf="compareList.length > 0" class="compare-footer">
+      <div class="compare-summary">
+        <span>{{ compareList.length }} products selected for comparison</span>
+      </div>
+      <button nz-button nzType="primary" (click)="goToCompare()">
+        View Comparison
+      </button>
+    </div>
+  </div>

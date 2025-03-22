@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/ng-zorro-antd/ng-zorro-antd.min.css";
+
+
+
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-layout {
+  nz-content {
+    margin-left: 200px;
+    margin-top: 64px;
+    transition: all 0.2s;
+  }
+  
+  &.sidebar-collapsed {
+    nz-content {
+      margin-left: 80px;
+    }
+  }
+}
+
+.ant-layout-header {
+  height: 64px;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: #e6f7ff;
+}
+
+
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 16px;
+}
+

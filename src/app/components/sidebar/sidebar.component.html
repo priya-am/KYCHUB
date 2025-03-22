@@ -1,0 +1,20 @@
+ <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzWidth]="200" class="sidebar">
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li 
+        nz-menu-item 
+        routerLink="/product-details" 
+        routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="appstore" nzTheme="outline"></span>
+        <span>Product Details</span>
+      </li>
+      <li 
+        nz-menu-item 
+        routerLink="/compare-products" 
+        routerLinkActive="ant-menu-item-selected">
+        <span nz-icon nzType="comparison" nzTheme="outline"></span>
+        <span>Compare Products</span>
+      </li>
+    </ul>
+  </nz-sider>
+  
+  

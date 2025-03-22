@@ -1,0 +1,42 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #001529;
+    // background: #008000;
+    padding: 0 24px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  .logo {
+    height: 64px;
+    display: flex;
+    align-items: center;
+    
+    h1 {
+      color: #fff;
+      margin: 0;
+      font-size: 20px;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+    
+    .compare-link {
+      color: #fff;
+      margin-right: 24px;
+      font-size: 16px;
+    }
+    
+    .user-avatar {
+      background-color: #1890ff;
+    }
+  }
